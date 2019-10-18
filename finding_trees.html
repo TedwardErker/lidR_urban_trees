@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-18 Fri 10:30 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seeing the trees for the urban forest</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Seeing the trees for the urban forest</h1>
+<hr />
+
+<p>
+The <a href="https://github.com/Jean-Romain/lidR/"><code>lidR</code> package</a> is an incredible tool for working with lidar data
+in R.  It is specifically designed around forestry applications, which
+is super handy because it has a number of algorithms for tree
+identification and the like.  But one draw back is that its main use
+environment was forests made up of only trees.  I work in forests
+that have pesky buildings mixed in with the trees.  Separating trees
+from buildings is essential to properly estimate forest
+characteristics.
+</p>
+
+<p>
+<code>lastools</code> has the <a href="https://rapidlasso.com/lastools/lasclassify/"><code>lasclassify</code> tool</a> to classify point clouds, but it
+is not free.  By using the development version (as of
+2019-10-18 Fri) of the lidR package and the function <a href="https://github.com/Jean-Romain/lidR/issues/276"><code>point_metrics</code></a>
+along with the <code>detect_shape</code> function, I was able to pretty well
+separate out the trees from buildings.  
+</p>
+
+<p>
+I'm sure that both the parameters used in this workflow and the
+workflow/code itself can be better optimized.  Suggestions welcome!
+</p>
+
+
+<p>
+A quick note on this document: All the R code exists in one file
+<a href="finding_trees.R">finding_trees.R</a>.  I saved the rgl plots as htmlwidgets because I
+think that it is handy to be able to move the point cloud around.
+However, those are large files, so I only saved 2.  Run the code
+yourself to see all the other plots.
+</p>
+
+<div id="outline-container-org936d929" class="outline-2">
+<h2 id="org936d929">load libraries</h2>
+<div class="outline-text-2" id="text-org936d929">
+<div class="org-src-container">
+<pre class="src src-R">    <span style="color: #268bd2; font-weight: bold;">library</span>(devtools)
+<span style="color: #586e75;"># </span><span style="color: #586e75;">need the development version (as of 2019-10-18 Fri) to get the point_metrics function.</span>
+<span style="color: #586e75;"># </span><span style="color: #586e75;">the point metrics function is likely to change when released into the stable version which will probably break this code</span>
+<span style="color: #586e75;"># </span><span style="color: #586e75;">but I hope the concept remains the same.</span>
+  install_github(<span style="color: #2aa198;">"Jean-Romain/lidR"</span>, ref = <span style="color: #2aa198;">"devel"</span>)
+    <span style="color: #268bd2; font-weight: bold;">library</span>(lidR) 
+    <span style="color: #268bd2; font-weight: bold;">library</span>(rgl)
+    <span style="color: #268bd2;">pct_x_is</span><span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #859900; font-weight: bold;">function</span>(x, is) {
+        <span style="color: #859900; font-weight: bold;">return</span>(list(pct_x = sum(x == is) / length(x)))
+        }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org54077e5" class="outline-2">
+<h2 id="org54077e5">look at the example lidar point cloud.  2016 lidar from Madison, WI</h2>
+<div class="outline-text-2" id="text-org54077e5">
+<div class="org-src-container">
+<pre class="src src-R">l <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readLAS(<span style="color: #2aa198;">"test2016.las"</span>, filter = <span style="color: #2aa198;">"-drop_z_below 6 -keep_first"</span>)
+plot(l)
+lw <span style="color: #268bd2; font-weight: bold;">&lt;-</span> rglwidget()
+htmlwidgets::saveWidget(lw, <span style="color: #2aa198;">"height.html"</span>)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Scroll to zoom</li>
+<li>left click and move to rotate</li>
+<li>right click and move to pan (doesn't work in web browser)</li>
+</ul>
+
+<iframe src=height.html height=600px width=1100px ></iframe>
+</div>
+</div>
+
+<div id="outline-container-org7a9e405" class="outline-2">
+<h2 id="org7a9e405">find coplanar points and call them "building"</h2>
+<div class="outline-text-2" id="text-org7a9e405">
+<div class="org-src-container">
+<pre class="src src-R">lsp <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasdetectshape(l, shp_plane(th1 = 4, th2 = 4, k = 10), <span style="color: #2aa198;">"building"</span>)
+plot(lsp, color = <span style="color: #2aa198;">"building"</span>, col = c(<span style="color: #2aa198;">"green"</span>, <span style="color: #2aa198;">"red"</span>))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org95b68af" class="outline-2">
+<h2 id="org95b68af">Use <code>point_metrics</code></h2>
+<div class="outline-text-2" id="text-org95b68af">
+<p>
+If a point has more than 60% of it's nearest k (50 in this case)
+points assigned building, then it too is probably a building - assign
+it to building. If a point has less than 40% of it's nearest k (50 in
+this case) points assigned building, then it is probably not a
+building - asign it to not building.
+</p>
+<div class="org-src-container">
+<pre class="src src-R">  pm <span style="color: #268bd2; font-weight: bold;">&lt;-</span> point_metrics(lsp, ~pct_x_is(x = building, is = <span style="color: #b58900;">TRUE</span>), k = 50)
+
+<span style="color: #586e75;"># </span><span style="color: #586e75;">uncomment this bit of code if you'd like to see what the "percent building" looks like.</span>
+<span style="color: #586e75;">#  </span><span style="color: #586e75;">lsp &lt;- lasadddata(lsp, pm$pct_x, "pct_x")</span>
+<span style="color: #586e75;">#  </span><span style="color: #586e75;">plot(lsp, color = "pct_x", trim = 1)</span>
+
+  lsp@data$building[pm$pct_x &gt; .6] <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #b58900;">TRUE</span>
+  lsp@data$building[pm$pct_x &lt; .4] <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #b58900;">FALSE</span>
+  plot(lsp, color = <span style="color: #2aa198;">"building"</span>, col = c(<span style="color: #2aa198;">"green"</span>, <span style="color: #2aa198;">"red"</span>))
+</pre>
+</div>
+
+<p>
+This works surprisingly well!  But there powerlines and a tower on top
+of a building that are assigned to tree/not building.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org092632e" class="outline-2">
+<h2 id="org092632e">Try to remove powerlines and tower using colinear shape detection</h2>
+<div class="outline-text-2" id="text-org092632e">
+<div class="org-src-container">
+<pre class="src src-R">lf <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasfilter(lsp, building == <span style="color: #b58900;">FALSE</span>)
+lfl <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasdetectshape(lf, shp_line(th1 = 4, k = 15), <span style="color: #2aa198;">"building"</span>)
+plot(lfl, color = <span style="color: #2aa198;">"building"</span>)
+</pre>
+</div>
+
+<p>
+Use <code>point_metrics</code> again.
+</p>
+<div class="org-src-container">
+<pre class="src src-R">pm <span style="color: #268bd2; font-weight: bold;">&lt;-</span> point_metrics(lfl, ~pct_x_is(x = building, is = <span style="color: #b58900;">TRUE</span>), k = 30)
+
+lfl@data$building[pm$pct_x &gt; .4] <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #b58900;">TRUE</span>
+lfl@data$building[pm$pct_x &lt; .1] <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #b58900;">FALSE</span>
+plot(lfl, color = <span style="color: #2aa198;">"building"</span>, col = c(<span style="color: #2aa198;">"green"</span>, <span style="color: #2aa198;">"red"</span>))
+lf <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasfilter(lfl, building == <span style="color: #b58900;">FALSE</span>)
+
+plot(lf)
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R">treesw <span style="color: #268bd2; font-weight: bold;">&lt;-</span> rglwidget()
+htmlwidgets::saveWidget(treesw, <span style="color: #2aa198;">"trees.html"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2a4c795" class="outline-2">
+<h2 id="org2a4c795">Result</h2>
+<div class="outline-text-2" id="text-org2a4c795">
+<p>
+Here is the point cloud of just trees and the original points below it
+for comparison:
+</p>
+<iframe src=trees.html height=600px width=1100px ></iframe>
+<iframe src=height.html height=600px width=1100px ></iframe>
+</div>
+</div>
+
+<div id="outline-container-org7d3ac2e" class="outline-2">
+<h2 id="org7d3ac2e">Improvements to be made</h2>
+<div class="outline-text-2" id="text-org7d3ac2e">
+<p>
+There are certainly still powerlines that I could not remove.  I could
+probably play around more with the thresholds and the parameters that
+I use.  Possibly call <code>point_metrics</code> iteratively, using smaller
+neighborhoods first.  But for a first cut I think this is pretty
+good.  Again, any suggestions for improvement are very welcome.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2019-10-18 Fri 10:30</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

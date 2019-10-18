@@ -1,0 +1,135 @@
+#+TITLE: Seeing the trees for the urban forest
+#+AUTHOR: erker
+#+email: erker@wisc.edu
+#+PROPERTY:  header-args:R :cache no :results output :exports both :comments link :session *R:trees* :eval no :tangle finding_trees.R
+#+startup: indent entitiespretty
+#+FILETAGS: work allo
+#+HTML_HEAD: <style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
+#+OPTIONS: toc:nil num:nil date:t author:nil
+---------------------
+
+The [[https://github.com/Jean-Romain/lidR/][=lidR= package]] is an incredible tool for working with lidar data
+in R.  It is specifically designed around forestry applications, which
+is super handy because it has a number of algorithms for tree
+identification and the like.  But one draw back is that its main use
+environment was forests made up of only trees.  I work in forests
+that have pesky buildings mixed in with the trees.  Separating trees
+from buildings is essential to properly estimate forest
+characteristics.
+
+=lastools= has the [[https://rapidlasso.com/lastools/lasclassify/][=lasclassify= tool]] to classify point clouds, but it
+is not free.  By using the development version (as of
+2019-10-18 Fri) of the lidR package and the function [[https://github.com/Jean-Romain/lidR/issues/276][=point_metrics=]]
+along with the =detect_shape= function, I was able to pretty well
+separate out the trees from buildings.  
+
+I'm sure that both the parameters used in this workflow and the
+workflow/code itself can be better optimized.  Suggestions welcome!
+
+
+A quick note on this document: All the R code exists in one file
+[[file:finding_trees.R]].  I saved the rgl plots as htmlwidgets because I
+think that it is handy to be able to move the point cloud around.
+However, those are large files, so I only saved 2.  Run the code
+yourself to see all the other plots.
+
+** load libraries
+#+begin_src R
+      library(devtools)
+  # need the development version (as of 2019-10-18 Fri) to get the point_metrics function.
+  # the point metrics function is likely to change when released into the stable version which will probably break this code
+  # but I hope the concept remains the same.
+    install_github("Jean-Romain/lidR", ref = "devel")
+      library(lidR) 
+      library(rgl)
+      pct_x_is<- function(x, is) {
+          return(list(pct_x = sum(x == is) / length(x)))
+          }
+#+end_src
+
+** look at the example lidar point cloud.  2016 lidar from Madison, WI
+#+begin_src R
+  l <- readLAS("test2016.las", filter = "-drop_z_below 6 -keep_first")
+  plot(l)
+  lw <- rglwidget()
+  htmlwidgets::saveWidget(lw, "height.html")
+#+end_src
+
+- Scroll to zoom
+- left click and move to rotate
+- right click and move to pan (doesn't work in web browser)
+
+#+begin_export html
+<iframe src=height.html height=600px width=1100px ></iframe>
+#+end_export
+
+** find coplanar points and call them "building"
+#+begin_src R
+  lsp <- lasdetectshape(l, shp_plane(th1 = 4, th2 = 4, k = 10), "building")
+  plot(lsp, color = "building", col = c("green", "red"))
+#+end_src
+
+** Use =point_metrics=
+If a point has more than 60% of it's nearest k (50 in this case)
+points assigned building, then it too is probably a building - assign
+it to building. If a point has less than 40% of it's nearest k (50 in
+this case) points assigned building, then it is probably not a
+building - asign it to not building.
+#+begin_src R
+  pm <- point_metrics(lsp, ~pct_x_is(x = building, is = TRUE), k = 50)
+
+# uncomment this bit of code if you'd like to see what the "percent building" looks like.
+#  lsp <- lasadddata(lsp, pm$pct_x, "pct_x")
+#  plot(lsp, color = "pct_x", trim = 1)
+
+  lsp@data$building[pm$pct_x > .6] <- TRUE
+  lsp@data$building[pm$pct_x < .4] <- FALSE
+  plot(lsp, color = "building", col = c("green", "red"))
+#+end_src
+
+This works surprisingly well!  But there powerlines and a tower on top
+of a building that are assigned to tree/not building.
+
+** Try to remove powerlines and tower using colinear shape detection
+#+begin_src R
+  lf <- lasfilter(lsp, building == FALSE)
+  lfl <- lasdetectshape(lf, shp_line(th1 = 4, k = 15), "building")
+  plot(lfl, color = "building")
+#+end_src
+
+Use =point_metrics= again.
+#+begin_src R
+  pm <- point_metrics(lfl, ~pct_x_is(x = building, is = TRUE), k = 30)
+
+  lfl@data$building[pm$pct_x > .4] <- TRUE
+  lfl@data$building[pm$pct_x < .1] <- FALSE
+  plot(lfl, color = "building", col = c("green", "red"))
+  lf <- lasfilter(lfl, building == FALSE)
+
+  plot(lf)
+
+#+end_src
+
+#+begin_src R
+  treesw <- rglwidget()
+  htmlwidgets::saveWidget(treesw, "trees.html")
+#+end_src
+** Result
+Here is the point cloud of just trees and the original points below it
+for comparison:
+#+begin_export html
+<iframe src=trees.html height=600px width=1100px ></iframe>
+<iframe src=height.html height=600px width=1100px ></iframe>
+#+end_export
+
+** Improvements to be made
+There are certainly still powerlines that I could not remove.  I could
+probably play around more with the thresholds and the parameters that
+I use.  Possibly call =point_metrics= iteratively, using smaller
+neighborhoods first.  But for a first cut I think this is pretty
+good.  Again, any suggestions for improvement are very welcome.
+
+** COMMENT resources
+https://www.reddit.com/r/emacs/comments/ahbsb9/the_one_thing_keeping_me_from_switching_to/
+https://gist.github.com/behrica/1c269a661bd674d223b4c6ce58b5045a
+https://github.com/cran/rgl/blob/master/vignettes/rgl.Rmd
