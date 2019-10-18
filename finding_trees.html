@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-18 Fri 10:30 -->
+<!-- 2019-10-18 Fri 10:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Seeing the trees for the urban forest</title>
@@ -259,15 +259,19 @@ workflow/code itself can be better optimized.  Suggestions welcome!
 
 <p>
 A quick note on this document: All the R code exists in one file
-<a href="finding_trees.R">finding_trees.R</a>.  I saved the rgl plots as htmlwidgets because I
-think that it is handy to be able to move the point cloud around.
-However, those are large files, so I only saved 2.  Run the code
-yourself to see all the other plots.
+<a href="finding_trees.R">finding_trees.R</a>.  Run the code yourself to see all the other
+plots.  I saved the rgl plots as htmlwidgets because I think that it
+is handy to be able to move the point cloud around.  However, those
+are large files, so I only saved 2.  Downloading the repository and
+opening <code>finding_trees.html</code> in a browser will allow you the best
+viewing experience (html widgets aren't shown in the github preview).
 </p>
 
-<div id="outline-container-org936d929" class="outline-2">
-<h2 id="org936d929">load libraries</h2>
-<div class="outline-text-2" id="text-org936d929">
+
+
+<div id="outline-container-org7d724e9" class="outline-2">
+<h2 id="org7d724e9">load libraries</h2>
+<div class="outline-text-2" id="text-org7d724e9">
 <div class="org-src-container">
 <pre class="src src-R">    <span style="color: #268bd2; font-weight: bold;">library</span>(devtools)
 <span style="color: #586e75;"># </span><span style="color: #586e75;">need the development version (as of 2019-10-18 Fri) to get the point_metrics function.</span>
@@ -284,9 +288,9 @@ yourself to see all the other plots.
 </div>
 </div>
 
-<div id="outline-container-org54077e5" class="outline-2">
-<h2 id="org54077e5">look at the example lidar point cloud.  2016 lidar from Madison, WI</h2>
-<div class="outline-text-2" id="text-org54077e5">
+<div id="outline-container-orge2c9bbb" class="outline-2">
+<h2 id="orge2c9bbb">look at the example lidar point cloud.  2016 lidar from Madison, WI</h2>
+<div class="outline-text-2" id="text-orge2c9bbb">
 <div class="org-src-container">
 <pre class="src src-R">l <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readLAS(<span style="color: #2aa198;">"test2016.las"</span>, filter = <span style="color: #2aa198;">"-drop_z_below 6 -keep_first"</span>)
 plot(l)
@@ -305,9 +309,9 @@ htmlwidgets::saveWidget(lw, <span style="color: #2aa198;">"height.html"</span>)
 </div>
 </div>
 
-<div id="outline-container-org7a9e405" class="outline-2">
-<h2 id="org7a9e405">find coplanar points and call them "building"</h2>
-<div class="outline-text-2" id="text-org7a9e405">
+<div id="outline-container-orgc8383cd" class="outline-2">
+<h2 id="orgc8383cd">find coplanar points and call them "building"</h2>
+<div class="outline-text-2" id="text-orgc8383cd">
 <div class="org-src-container">
 <pre class="src src-R">lsp <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasdetectshape(l, shp_plane(th1 = 4, th2 = 4, k = 10), <span style="color: #2aa198;">"building"</span>)
 plot(lsp, color = <span style="color: #2aa198;">"building"</span>, col = c(<span style="color: #2aa198;">"green"</span>, <span style="color: #2aa198;">"red"</span>))
@@ -316,9 +320,9 @@ plot(lsp, color = <span style="color: #2aa198;">"building"</span>, col = c(<span
 </div>
 </div>
 
-<div id="outline-container-org95b68af" class="outline-2">
-<h2 id="org95b68af">Use <code>point_metrics</code></h2>
-<div class="outline-text-2" id="text-org95b68af">
+<div id="outline-container-org8eb0906" class="outline-2">
+<h2 id="org8eb0906">Use <code>point_metrics</code></h2>
+<div class="outline-text-2" id="text-org8eb0906">
 <p>
 If a point has more than 60% of it's nearest k (50 in this case)
 points assigned building, then it too is probably a building - assign
@@ -346,9 +350,9 @@ of a building that are assigned to tree/not building.
 </div>
 </div>
 
-<div id="outline-container-org092632e" class="outline-2">
-<h2 id="org092632e">Try to remove powerlines and tower using colinear shape detection</h2>
-<div class="outline-text-2" id="text-org092632e">
+<div id="outline-container-org9fdbd75" class="outline-2">
+<h2 id="org9fdbd75">Try to remove powerlines and tower using colinear shape detection</h2>
+<div class="outline-text-2" id="text-org9fdbd75">
 <div class="org-src-container">
 <pre class="src src-R">lf <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasfilter(lsp, building == <span style="color: #b58900;">FALSE</span>)
 lfl <span style="color: #268bd2; font-weight: bold;">&lt;-</span> lasdetectshape(lf, shp_line(th1 = 4, k = 15), <span style="color: #2aa198;">"building"</span>)
@@ -379,9 +383,9 @@ htmlwidgets::saveWidget(treesw, <span style="color: #2aa198;">"trees.html"</span
 </div>
 </div>
 </div>
-<div id="outline-container-org2a4c795" class="outline-2">
-<h2 id="org2a4c795">Result</h2>
-<div class="outline-text-2" id="text-org2a4c795">
+<div id="outline-container-org5580ee3" class="outline-2">
+<h2 id="org5580ee3">Result</h2>
+<div class="outline-text-2" id="text-org5580ee3">
 <p>
 Here is the point cloud of just trees and the original points below it
 for comparison:
@@ -391,9 +395,9 @@ for comparison:
 </div>
 </div>
 
-<div id="outline-container-org7d3ac2e" class="outline-2">
-<h2 id="org7d3ac2e">Improvements to be made</h2>
-<div class="outline-text-2" id="text-org7d3ac2e">
+<div id="outline-container-orgbe94ee4" class="outline-2">
+<h2 id="orgbe94ee4">Improvements to be made</h2>
+<div class="outline-text-2" id="text-orgbe94ee4">
 <p>
 There are certainly still powerlines that I could not remove.  I could
 probably play around more with the thresholds and the parameters that
@@ -405,7 +409,7 @@ good.  Again, any suggestions for improvement are very welcome.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2019-10-18 Fri 10:30</p>
+<p class="date">Created: 2019-10-18 Fri 10:37</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
