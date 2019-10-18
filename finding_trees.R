@@ -1,6 +1,6 @@
 ## [[file:~/git/finding_trees/finding_trees.org::*load%20libraries][load libraries:1]]
 library(devtools)
-# need the development version (as of [2019-10-18 Fri]) to get the point_metrics function.
+# need the development version (as of 2019-10-18 Fri) to get the point_metrics function.
 # the point metrics function is likely to change when released into the stable version which will probably break this code
 # but I hope the concept remains the same.
   install_github("Jean-Romain/lidR", ref = "devel")
@@ -13,9 +13,10 @@ library(devtools)
 
 ## [[file:~/git/finding_trees/finding_trees.org::*look%20at%20the%20example%20lidar%20point%20cloud.%202016%20lidar%20from%20Madison,%20WI][look at the example lidar point cloud.  2016 lidar from Madison, WI:1]]
 l <- readLAS("test2016.las", filter = "-drop_z_below 6 -keep_first")
-plot(l)
-lw <- rglwidget()
-htmlwidgets::saveWidget(lw, "height.html")
+  plot(l)
+# uncomment to run.  this takes a long while
+#  lw <- rglwidget()
+#  htmlwidgets::saveWidget(lw, "height.html")
 ## look at the example lidar point cloud.  2016 lidar from Madison, WI:1 ends here
 
 ## [[file:~/git/finding_trees/finding_trees.org::*find%20coplanar%20points%20and%20call%20them%20"building"][find coplanar points and call them "building":1]]
@@ -53,6 +54,7 @@ plot(lf)
 ## Try to remove powerlines and tower using colinear shape detection:2 ends here
 
 ## [[file:~/git/finding_trees/finding_trees.org::*Try%20to%20remove%20powerlines%20and%20tower%20using%20colinear%20shape%20detection][Try to remove powerlines and tower using colinear shape detection:3]]
-treesw <- rglwidget()
-htmlwidgets::saveWidget(treesw, "trees.html")
+# uncomment to run.  this takes a long while 
+# treesw <- rglwidget()
+#  htmlwidgets::saveWidget(treesw, "trees.html")
 ## Try to remove powerlines and tower using colinear shape detection:3 ends here

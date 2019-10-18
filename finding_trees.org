@@ -47,8 +47,9 @@ workflow/code itself can be better optimized.  Suggestions welcome!
 #+begin_src R
   l <- readLAS("test2016.las", filter = "-drop_z_below 6 -keep_first")
   plot(l)
-  lw <- rglwidget()
-  htmlwidgets::saveWidget(lw, "height.html")
+# uncomment to run.  this takes a long while
+#  lw <- rglwidget()
+#  htmlwidgets::saveWidget(lw, "height.html")
 #+end_src
 
 - Scroll to zoom
@@ -107,8 +108,9 @@ Use =point_metrics= again.
 #+end_src
 
 #+begin_src R
-  treesw <- rglwidget()
-  htmlwidgets::saveWidget(treesw, "trees.html")
+# uncomment to run.  this takes a long while 
+# treesw <- rglwidget()
+#  htmlwidgets::saveWidget(treesw, "trees.html")
 #+end_src
 ** Result
 Here is the point cloud of just trees and the original points below it
