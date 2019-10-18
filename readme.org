@@ -1,6 +1,9 @@
+This repository documents my attempt to use the lidR package to
+separate trees from buildings in a lidar point cloud from an urban
+environment.
 
-Clone or download the repository and open =finding_trees.html= to get
-the gist.
+Clone or download the repository and open =finding_trees.html= for the
+best viewing experience.
 
 All the R code exists in one file [[file:finding_trees.R]].  Run the code
 yourself to see all the other plots.  I saved the rgl plots as
