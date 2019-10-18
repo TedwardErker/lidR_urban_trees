@@ -1,0 +1,11 @@
+
+Clone or download the repository and open =finding_trees.html= to get
+the gist.
+
+All the R code exists in one file [[file:finding_trees.R]].  Run the code
+yourself to see all the other plots.  I saved the rgl plots as
+htmlwidgets because I think that it is handy to be able to move the
+point cloud around.  However, those are large files, so I only
+saved 2.  Downloading the repository and opening =finding_trees.html=
+in a browser will allow you the best viewing experience (html widgets
+aren't shown in the github preview).
