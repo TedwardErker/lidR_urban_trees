@@ -1,7 +1,7 @@
 #+TITLE: Seeing the trees for the urban forest
 #+AUTHOR: erker
 #+email: erker@wisc.edu
-#+PROPERTY:  header-args:R :cache no :results output :exports both :comments link :session *R:trees* :eval no :tangle finding_trees.R
+#+PROPERTY:  header-args:R :cache no :results output :exports both :comments link :session *R:trees* :eval yes :tangle finding_trees.R
 #+startup: indent entitiespretty
 #+FILETAGS: work allo
 #+HTML_HEAD: <style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
@@ -27,15 +27,16 @@ I'm sure that both the parameters used in this workflow and the
 workflow/code itself can be better optimized.  Suggestions welcome!
 
 
+* COMMENT trying to make a gif?
+https://nicoscattaneo.wordpress.com/2018/03/04/r-create-a-gif-with-rgl-and-imagemagick-from-3d-data/
 
-
-** load libraries
+* load libraries
 #+begin_src R
       library(devtools)
   # need the development version (as of 2019-10-18 Fri) to get the point_metrics function.
   # the point metrics function is likely to change when released into the stable version which will probably break this code
   # but I hope the concept remains the same.
-    install_github("Jean-Romain/lidR", ref = "devel")
+  #  install_github("Jean-Romain/lidR", ref = "devel")
       library(lidR) 
       library(rgl)
       pct_x_is<- function(x, is) {
@@ -43,14 +44,25 @@ workflow/code itself can be better optimized.  Suggestions welcome!
           }
 #+end_src
 
-** look at the example lidar point cloud.  2016 lidar from Madison, WI
+#+RESULTS:
+: Loading required package: usethis
+: Skipping install of 'lidR' from a github remote, the SHA1 (0969ff5a) has not changed since last install.
+:   Use `force = TRUE` to force installation
+: Loading required package: raster
+: Loading required package: sp
+: lidR 2.2.0 using 4 threads. Help on <gis.stackexchange.com>. Bug report on <github.com/Jean-Romain/lidR>.
+
+* look at the example lidar point cloud.  2016 lidar from Madison, WI
 #+begin_src R
-  l <- readLAS("test2016.las", filter = "-drop_z_below 6 -keep_first")
+    l <- readLAS("test2016.las", filter = "-drop_z_below 6 -keep_first")
+  proj4string(l) <- "+init=epsg:7599"
   plot(l)
-# uncomment to run.  this takes a long while
-#  lw <- rglwidget()
-#  htmlwidgets::saveWidget(lw, "height.html")
+  # uncomment to run.  this takes a long while
+  #  lw <- rglwidget()
+  #  htmlwidgets::saveWidget(lw, "height.html")
 #+end_src
+
+#+RESULTS:
 
 - Scroll to zoom
 - left click and move to rotate
@@ -60,39 +72,45 @@ workflow/code itself can be better optimized.  Suggestions welcome!
 <iframe src=height.html height=600px width=1100px ></iframe>
 #+end_export
 
-** find coplanar points and call them "building"
+* find coplanar points and call them "building"
 #+begin_src R
   lsp <- lasdetectshape(l, shp_plane(th1 = 4, th2 = 4, k = 10), "building")
   plot(lsp, color = "building", col = c("green", "red"))
 #+end_src
 
-** Use =point_metrics=
+#+RESULTS:
+
+* Use =point_metrics=
 If a point has more than 60% of it's nearest k (50 in this case)
 points assigned building, then it too is probably a building - assign
 it to building. If a point has less than 40% of it's nearest k (50 in
 this case) points assigned building, then it is probably not a
 building - asign it to not building.
 #+begin_src R
-  pm <- point_metrics(lsp, ~pct_x_is(x = building, is = TRUE), k = 50)
+    pm <- point_metrics(lsp, ~pct_x_is(x = building, is = TRUE), k = 50)
 
-# uncomment this bit of code if you'd like to see what the "percent building" looks like.
-#  lsp <- lasadddata(lsp, pm$pct_x, "pct_x")
-#  plot(lsp, color = "pct_x", trim = 1)
+  # uncomment this bit of code if you'd like to see what the "percent building" looks like.
+    lsp <- lasadddata(lsp, pm$pct_x, "pct_x")
+    plot(lsp, color = "pct_x", trim = 1)
 
-  lsp@data$building[pm$pct_x > .6] <- TRUE
-  lsp@data$building[pm$pct_x < .4] <- FALSE
-  plot(lsp, color = "building", col = c("green", "red"))
+    lsp@data$building[pm$pct_x > .6] <- TRUE
+    lsp@data$building[pm$pct_x < .4] <- FALSE
+    plot(lsp, color = "building", col = c("green", "red"))
 #+end_src
+
+#+RESULTS:
 
 This works surprisingly well!  But there powerlines and a tower on top
 of a building that are assigned to tree/not building.
 
-** Try to remove powerlines and tower using colinear shape detection
+* Try to remove powerlines and tower using colinear shape detection
 #+begin_src R
   lf <- lasfilter(lsp, building == FALSE)
   lfl <- lasdetectshape(lf, shp_line(th1 = 4, k = 15), "building")
   plot(lfl, color = "building")
 #+end_src
+
+#+RESULTS:
 
 Use =point_metrics= again.
 #+begin_src R
@@ -107,12 +125,29 @@ Use =point_metrics= again.
 
 #+end_src
 
+#+RESULTS:
+
+* merge back with original data
+#+begin_src R
+
+  lfd <- lf@data[,c("X","Y","Z")]
+  lfd$Classification <- 5L  # all of these points are trees
+
+  l@data <- merge.data.table(l@data[,-c("Classification")], lfd, all.x = T)
+  plot(l, color = "Classification")
+
+#+end_src
+
+#+RESULTS:
+
 #+begin_src R
 # uncomment to run.  this takes a long while 
-# treesw <- rglwidget()
-#  htmlwidgets::saveWidget(treesw, "trees.html")
+ treesw <- rglwidget()
+  htmlwidgets::saveWidget(treesw, "trees.html")
 #+end_src
-** Result
+
+
+* Result
 Here is the point cloud of just trees and the original points below it
 for comparison:
 #+begin_export html
@@ -120,14 +155,14 @@ for comparison:
 <iframe src=height.html height=600px width=1100px ></iframe>
 #+end_export
 
-** Improvements to be made
+* Improvements to be made
 There are certainly still powerlines that I could not remove.  I could
 probably play around more with the thresholds and the parameters that
 I use.  Possibly call =point_metrics= iteratively, using smaller
 neighborhoods first.  But for a first cut I think this is pretty
 good.  Again, any suggestions for improvement are very welcome.
 
-** COMMENT resources
+* COMMENT resources
 https://www.reddit.com/r/emacs/comments/ahbsb9/the_one_thing_keeping_me_from_switching_to/
 https://gist.github.com/behrica/1c269a661bd674d223b4c6ce58b5045a
 https://github.com/cran/rgl/blob/master/vignettes/rgl.Rmd
