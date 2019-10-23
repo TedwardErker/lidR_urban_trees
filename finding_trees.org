@@ -152,27 +152,26 @@ userMatrix
 
 #+RESULTS:
 :  
-:           [,1]       [,2]       [,3] [,4]
-: [1,]  0.9378837 -0.3373630 0.08099772    0
-: [2,]  0.2516586  0.8221987 0.51054591    0
-: [3,] -0.2388356 -0.4584489 0.85602695    0
-: [4,]  0.0000000  0.0000000 0.00000000    1
+:              [,1]         [,2]         [,3] [,4]
+: [1,]  0.9999996424 -0.000367742 0.0008221203    0
+: [2,] -0.0003469232  0.685068250 0.7284789085    0
+: [3,] -0.0008309633 -0.728478849 0.6850677133    0
+: [4,]  0.0000000000  0.000000000 0.0000000000    1
 
 #+begin_src R
-  Angle1 <- .3
+  Angle1 <- .4
    Angle <- rep(Angle1 * pi / 180, 360/Angle1) 
    sum(Angle*180/pi)
 
    Animation.dir <- paste(getwd(), "/animation", sep="") 
    Animation.dir
 
-
    for (i in seq(Angle)) {
   #     view3d(userMatrix = rotate3d(par3d("userMatrix"), Angle[i], 0, 0, 1))
        view3d(userMatrix = rotate3d(par3d("userMatrix"), Angle[i], 0, 0, 1), zoom = zoom)
 
        rgl.snapshot(filename=paste(paste(Animation.dir, "/frame-", sep=""),
-                                   sprintf("%03d", i), ".png", sep=""))
+                                   sprintf("%05d", i), ".png", sep=""))
    }
 #+end_src
 
@@ -180,9 +179,9 @@ userMatrix
 : [1] 360
 : [1] "/home/erker/git/finding_trees/animation"
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :session a
 cd ~/git/finding_trees/animation/
-convert -delay 2 -loop 0 *.png ../marquette.gif
+convert -delay 2 -loop 0 *.png ../figs/marquette.gif
 
 #+END_SRC
 
