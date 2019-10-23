@@ -45,12 +45,6 @@ https://nicoscattaneo.wordpress.com/2018/03/04/r-create-a-gif-with-rgl-and-image
 #+end_src
 
 #+RESULTS:
-: Loading required package: usethis
-: Skipping install of 'lidR' from a github remote, the SHA1 (0969ff5a) has not changed since last install.
-:   Use `force = TRUE` to force installation
-: Loading required package: raster
-: Loading required package: sp
-: lidR 2.2.0 using 4 threads. Help on <gis.stackexchange.com>. Bug report on <github.com/Jean-Romain/lidR>.
 
 * look at the example lidar point cloud.  2016 lidar from Madison, WI
 #+begin_src R
@@ -71,6 +65,7 @@ https://nicoscattaneo.wordpress.com/2018/03/04/r-create-a-gif-with-rgl-and-image
 #+begin_export html
 <iframe src=height.html height=600px width=1100px ></iframe>
 #+end_export
+
 
 * find coplanar points and call them "building"
 #+begin_src R
@@ -129,12 +124,13 @@ Use =point_metrics= again.
 
 * merge back with original data
 #+begin_src R
-
-  lfd <- lf@data[,c("X","Y","Z")]
-  lfd$Classification <- 5L  # all of these points are trees
+  library(data.table)
+    lfd <- lf@data[,c("X","Y","Z")]
+    lfd$Classification <- 5L  # all of these points are trees
 
   l@data <- merge.data.table(l@data[,-c("Classification")], lfd, all.x = T)
-  plot(l, color = "Classification")
+
+  plot(l, color = "Classification",  bg = "white")
 
 #+end_src
 
@@ -145,6 +141,60 @@ Use =point_metrics= again.
  treesw <- rglwidget()
   htmlwidgets::saveWidget(treesw, "trees.html")
 #+end_src
+
+** COMMENT animation
+#+begin_src R
+  zoom<-par3d()$zoom
+  userMatrix<-par3d()$userMatrix
+  windowRect<-par3d()$windowRect
+userMatrix
+#+end_src
+
+#+RESULTS:
+:  
+:           [,1]       [,2]       [,3] [,4]
+: [1,]  0.9378837 -0.3373630 0.08099772    0
+: [2,]  0.2516586  0.8221987 0.51054591    0
+: [3,] -0.2388356 -0.4584489 0.85602695    0
+: [4,]  0.0000000  0.0000000 0.00000000    1
+
+#+begin_src R
+  Angle1 <- .3
+   Angle <- rep(Angle1 * pi / 180, 360/Angle1) 
+   sum(Angle*180/pi)
+
+   Animation.dir <- paste(getwd(), "/animation", sep="") 
+   Animation.dir
+
+
+   for (i in seq(Angle)) {
+  #     view3d(userMatrix = rotate3d(par3d("userMatrix"), Angle[i], 0, 0, 1))
+       view3d(userMatrix = rotate3d(par3d("userMatrix"), Angle[i], 0, 0, 1), zoom = zoom)
+
+       rgl.snapshot(filename=paste(paste(Animation.dir, "/frame-", sep=""),
+                                   sprintf("%03d", i), ".png", sep=""))
+   }
+#+end_src
+
+#+RESULTS:
+: [1] 360
+: [1] "/home/erker/git/finding_trees/animation"
+
+#+BEGIN_SRC sh
+cd ~/git/finding_trees/animation/
+convert -delay 2 -loop 0 *.png marquette.gif
+
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh
+cd ~/git/finding_trees/animation/
+gifsicle --colors=255 test.gif -o test_o.gif
+gifsicle -U -O2 test_o.gif -o test_o.gif
+#+END_SRC
+
+#+RESULTS:
 
 
 * Result
