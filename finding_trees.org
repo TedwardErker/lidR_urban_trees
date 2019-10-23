@@ -182,7 +182,7 @@ userMatrix
 
 #+BEGIN_SRC sh
 cd ~/git/finding_trees/animation/
-convert -delay 2 -loop 0 *.png marquette.gif
+convert -delay 2 -loop 0 *.png ../marquette.gif
 
 #+END_SRC
 
