@@ -13,6 +13,6 @@ saved 2.  Downloading the repository and opening =finding_trees.html=
 in a browser will allow you the best viewing experience (html widgets
 aren't shown in the github preview).
 
-file:animation/marquette.gif
+[[file:animation/marquette.gif]]
 
-file:figs/marquette_googlemaps.png
+[[file:figs/marquette_googlemaps.png]]
